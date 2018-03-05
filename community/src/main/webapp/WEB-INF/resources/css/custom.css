@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css?family=Nanum+Gothic');
+@import url('https://fonts.googleapis.com/earlyaccess/jejugothic.css');
+
+.nav-bar brand, h1, h2, h3, h4, h5 {
+    font-family: 'Jeju Gothic';
+}
+
+body {
+	padding-top: 80px;
+    font-family: 'Nanum Gothic';
+}
+
+.font_0 {
+  font: normal normal normal 28px/1.4em helvetica-w01-bold, helvetica-w02-bold, helvetica-lt-w10-bold, sans-serif;
+}
+
+.font_clr_ee {
+  color: #eeeeee;
+}
+
+.font_clr_ff {
+  color: #ffffff;
+}
+
+.h2_underline {
+  border-bottom: 5px solid #49c4af;
+  display: inline-block;
+  display: -webkit-inline-box;
+}
+
+.jumbo_bg {
+  background: url('../img/jumbo-bg.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.jumbo_board_bg {
+  background: url('../img/board-bg.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.navbar {
+  min-height: 80px;
+}
+
+#heading-breadcrumbs {
+  text-align: center;
+  background: #eee;
+  padding: 40px 0;
+  margin-bottom: 40px;
+}
+
+.blog-header-logo {
+  font-family: 'Jeju Myeongjo';
+  font-size: 2rem;
+}
+
+.footer {
+  padding: 2.5rem 0;
+  color: #fff;
+  text-align: center;
+  background-color: #343a40;
+  border-top: .05rem solid #e5e5e5;
+}
+
+@media(max-width:520px) {
+  .mobile {
+    display: none;
+  }
+}
