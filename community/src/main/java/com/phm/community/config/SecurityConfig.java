@@ -16,13 +16,13 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
 	@Autowired
-	private DataSource securityDataSource;
+	private DataSource dataSource;
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		// jdbc를 통한 사용자 인증 설정
 		// auth.jdbcAuthentication().dataSource(securityDataSource);
-		auth.jdbcAuthentication().dataSource(securityDataSource)
+		auth.jdbcAuthentication().dataSource(dataSource)
 			.usersByUsernameQuery("")
 			.authoritiesByUsernameQuery("");
 	}

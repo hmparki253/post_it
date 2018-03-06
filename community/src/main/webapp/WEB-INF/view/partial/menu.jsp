@@ -3,7 +3,7 @@
 
 <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
-    <a href="" class="navbar-brand font_0">Post It</a>
+    <a href="${pageContext.request.contextPath}/" class="navbar-brand font_0">Post It</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample07" aria-controls="navbarsExample07"
       aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -11,10 +11,10 @@
     <div class="collapse navbar-collapse" id="navbarsExample07">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a href="" class="nav-link">Main</a>
+          <a href="${pageContext.request.contextPath}/" class="nav-link">Main</a>
         </li>
         <li class="nav-item">
-          <a href="" class="nav-link">Board</a>
+          <a href="${pageContext.request.contextPath}/board/list" class="nav-link">Board</a>
         </li>
         <li class="nav-item">
           <a href="" class="nav-link">User</a>

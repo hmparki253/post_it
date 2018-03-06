@@ -1,13 +1,13 @@
-package com.phm.community.dao;
+package com.phm.community.service;
 
 import java.util.List;
 
 import com.phm.community.entity.Board;
 
-public interface BoardDAO {
+public interface BoardService {
 	public List<Board> getBoards();
 	public void saveBoard(Board board);
 	public Board getBoard(int idx);
 	public void deleteCustomer(int idx);
-	// search 관련 추가 요망 
+	// 추후 검색 관련 메서드 추가 필요 
 }

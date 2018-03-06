@@ -16,92 +16,95 @@
 </head>
 </head>
 <body>
-	<div class="container-fluid">
-		<div class="row d-flex d-md-block flex-nowrap wrapper">
-			<%@ include file="../partial/nav.jsp" %>
-			<main id="main" class="col-md-9 float-left col pl-md-5 pt-3 main">
-				<div class="page-header mt-3">
-					<h2>자유게시판</h2>
-					<p class="lead">
-						다른 회원들과 자유롭게 소통하세요.
-					</p>
-					<hr>
+	<%@include file="../partial/menu.jsp"%>
+	<main>
+	<div class="jumbotron jumbo_board_bg">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<h1 class="font_clr_ff">자유게시판</h1>
+					<h3 class="font_clr_ee">다른 회원들과</h3>
+					<h3 class="font_clr_ee">자유롭게 소통하세요.</h3>
+				</div>
+			</div>
+		</div>
+	</div>
+	<section>
+		<div class="container">
+			<div class="col-md-12 mb-4">
+				<div class="heading text-center">
+					<h2 class="h2_underline pb-2">글 목록</h2>
+				</div>
+			</div>
+			<div class="row">
+				<div class="container mt-5" style="min-height: 460px;">
 					<table class="table table-striped" style="max-width: 1080px;">
 						<thead>
 							<tr>
-								<th class="mobile" style="width: 55px; text-align: center;"> 번호 </th>
-								<th style="text-align: center;"> 제목 </th>
-								<th class="mobile" style="width: 80px; text-align: center;"> 작성자 </th>
-								<th class="mobile" style="width: 120px; text-align: center;"> 날짜 </th>
+								<th class="mobile" style="width: 55px; text-align: center;">
+									번호</th>
+								<th style="text-align: center;">제목</th>
+								<th class="mobile" style="width: 80px; text-align: center;">
+									작성자</th>
+								<th class="mobile" style="width: 120px; text-align: center;">
+									날짜</th>
+								<th class="mobile" style="width: 80px; text-align: center">
+									조회수</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td class="mobile" style="text-align: center;">3</td>
-								<td>
-									<a href="./boardView.html" style="color: #000000;">신규 운영진을 모집합니다.</a>
-								</td>
-								<td class="mobile" style="text-align: center;">운영자</td>
-								<td class="mobile" style="text-align: center;">2018-02-21</td>
-							</tr>
-							<tr>
-								<td class="mobile" style="text-align: center;">3</td>
-								<td>
-									<a href="./boardView.html" style="color: #000000;">신규 운영진을 모집합니다.</a>
-								</td>
-								<td class="mobile" style="text-align: center;">운영자</td>
-								<td class="mobile" style="text-align: center;">2018-02-21</td>
-							</tr>
-							<tr>
-								<td class="mobile" style="text-align: center;">3</td>
-								<td>
-									<a href="./boardView.html" style="color: #000000;">신규 운영진을 모집합니다.</a>
-								</td>
-								<td class="mobile" style="text-align: center;">운영자</td>
-								<td class="mobile" style="text-align: center;">2018-02-21</td>
-							</tr>
+							<c:forEach var="tempBoard" items="${boards }">
+								<tr>
+									<td class="mobile" style="text-align: center;">${tempBoard.idx}</td>
+									<td>
+										<a href="${pageContext.request.contextPath }/board/${tempBoard.idx}" style="color: #000000;">
+											${tempBoard.title }
+										</a>
+									</td>
+									<td class="mobile" style="text-align: center;">
+										${tempBoard.writer }
+									</td>
+									<td class="mobile" style="text-align: center">
+										${tempBoard.regDt }
+									</td>
+									<td class="mobile" style="text-align: center">
+										${tempBoard.hit }
+									</td>
+								</tr>
+							</c:forEach>
 						</tbody>
 					</table>
 					<div style="max-width: 1080px;">
-						<a href="${pageContext.request.contextPath}/board/write" class="btn btn-primary float-right">작성하기</a>
+						<a href="${pageContext.request.contextPath }/board/write" class="btn btn-primary float-right">작성하기</a>
 					</div>
-					<ul class="pagination">
-						<li class="page-item">
-							<span class="page-link">&laquo;</span>
-						</li>
-						<li class="page-item active">
-							<a href="#" class="page-link mobile">1</a>
-						</li>
-						<li class="page-item">
-							<a href="#" class="page-link mobile">2</a>
-						</li>
-						<li class="page-item">
-							<a href="#" class="page-link mobile">3</a>
-						</li>
-						<li class="page-item">
-							<a href="#" class="page-link mobile">4</a>
-						</li>
-						<li class="page-item">
-							<a href="#" class="page-link mobile">5</a>
-						</li>
-						<li class="page-item">
-							<a href="#" class="page-link mobile">6</a>
-						</li>
-						<li class="page-item">
-							<a href="#" class="page-link mobile">7</a>
-						</li>
-						<li class="page-item">
-							<a href="#" class="page-link mobile">8</a>
-						</li>
-						<li class="page-item">
-							<span class="page-link">&raquo;</span>
-						</li>
-					</ul>
-					<%@ include file="../partial/footer.jsp" %>
+					<div class="text-center" style="max-width: 1080px;">
+						<ul class="pagination">
+							<li class="page-item"><span class="page-link">&laquo;</span>
+							</li>
+							<li class="page-item active"><a href="#"
+								class="page-link mobile">1</a></li>
+							<li class="page-item"><a href="#" class="page-link mobile">2</a>
+							</li>
+							<li class="page-item"><span class="page-link">&raquo;</span>
+							</li>
+						</ul>
+					</div>
+					<div class="text-center" style="max-width: 1080px;">
+						<select name="" id="">
+							<option value="">제목</option>
+							<option value="">내용</option>
+							<option value="">제목+내용</option>
+							<option value="">작성자</option>
+						</select> <input type="text" name="" id="" placeholder="검색어를 입력해주세요.">
+						<a href="./boardWrite.html" class="btn btn-primary">검색하기</a>
+					</div>
 				</div>
-			</main>
+			</div>
 		</div>
-	</div>
+	</section>
+	</main>
+	<%@include file="../partial/footer.jsp" %>
+	
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
 		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
 		crossorigin="anonymous"></script>

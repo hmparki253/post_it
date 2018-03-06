@@ -36,6 +36,9 @@ public class Board {
 	@Column(name = "enabled")
 	private int enabled;
 	
+	@Column(name = "hit")
+	private int hit;
+	
 	public Board() { }
 
 	public Board(String title, String content, String writer, Date regDt) {
@@ -92,11 +95,18 @@ public class Board {
 	public void setEnabled(int enabled) {
 		this.enabled = enabled;
 	}
+	
+	public int getHit() {
+		return hit;
+	}
+
+	public void setHit(int hit) {
+		this.hit = hit;
+	}
 
 	@Override
 	public String toString() {
 		return "Board [idx=" + idx + ", title=" + title + ", content=" + content + ", writer=" + writer + ", regDt="
-				+ regDt + ", enabled=" + enabled + "]";
+				+ regDt + ", enabled=" + enabled + ", hit=" + hit + "]";
 	}
-
 }

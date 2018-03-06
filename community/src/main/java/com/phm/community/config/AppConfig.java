@@ -2,6 +2,7 @@ package com.phm.community.config;
 
 import java.beans.PropertyVetoException;
 import java.nio.charset.Charset;
+import java.util.Properties;
 import java.util.logging.Logger;
 
 import javax.servlet.Filter;
@@ -15,6 +16,11 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.TransactionManagementConfigurer;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -28,7 +34,8 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 @EnableWebMvc
 @ComponentScan(basePackages="com.phm.community")
 @PropertySource("classpath:persistence-mysql.properties")
-public class AppConfig implements WebMvcConfigurer{
+@EnableTransactionManagement
+public class AppConfig implements WebMvcConfigurer, TransactionManagementConfigurer{
 
 	@Autowired
 	private Environment env;
@@ -58,16 +65,19 @@ public class AppConfig implements WebMvcConfigurer{
         return characterEncodingFilter;
     }
     
+    // 데이터 소스와 커넥션 풀 셋업
     @Bean
-	public DataSource securityDataSource() {
+	public DataSource dataSource() {
 		
 		// create connection pool
-		ComboPooledDataSource securityDataSource
+		ComboPooledDataSource dataSource
 			= new ComboPooledDataSource();
 		
 		// set the jdbc driver class
 		try {
-			securityDataSource.setDriverClass(env.getProperty("jdbc.driver"));
+			logger.info("여기야 여기");
+			logger.info(">>> jdbc.driver = " + env.getProperty("jdbc.driver"));
+			dataSource.setDriverClass(env.getProperty("jdbc.driver"));
 		} catch (PropertyVetoException exc) {
 			throw new RuntimeException(exc);
 		}
@@ -77,18 +87,52 @@ public class AppConfig implements WebMvcConfigurer{
 		logger.info(">>> jdbc.user = " + env.getProperty("jdbc.user"));
 		
 		// set database connection properties
-		securityDataSource.setJdbcUrl(env.getProperty("jdbc.url"));
-		securityDataSource.setUser(env.getProperty("jdbc.user"));
-		securityDataSource.setPassword(env.getProperty("jdbc.password"));
+		dataSource.setJdbcUrl(env.getProperty("jdbc.url"));
+		dataSource.setUser(env.getProperty("jdbc.user"));
+		dataSource.setPassword(env.getProperty("jdbc.password"));
 		
 		// set connection pool properties
-		securityDataSource.setInitialPoolSize(getIntProperty("connection.pool.initialPoolSize"));
-		securityDataSource.setMinPoolSize(getIntProperty("connection.pool.minPoolSize"));
-		securityDataSource.setMaxPoolSize(getIntProperty("connection.pool.maxPoolSize"));
-		securityDataSource.setMaxIdleTime(getIntProperty("connection.pool.maxIdleTime"));
+		dataSource.setInitialPoolSize(getIntProperty("connection.pool.initialPoolSize"));
+		dataSource.setMinPoolSize(getIntProperty("connection.pool.minPoolSize"));
+		dataSource.setMaxPoolSize(getIntProperty("connection.pool.maxPoolSize"));
+		dataSource.setMaxIdleTime(getIntProperty("connection.pool.maxIdleTime"));
 		
-		return securityDataSource;
+		return dataSource;
 	}
+    
+    // 하이버네이트 세션 팩토리 셋업 
+    @Bean
+    public LocalSessionFactoryBean sessionFactory() {
+    		LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
+    		sessionFactory.setDataSource(dataSource());
+    		sessionFactory.setPackagesToScan("com.phm.community.entity");
+    		sessionFactory.setHibernateProperties(hibernateProperties());
+    		return sessionFactory;
+    }
+    
+    // 하이버네이트 프로퍼티 값 설정
+    private final Properties hibernateProperties() {
+    		Properties hibernateProperties = new Properties();
+    		hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
+    		hibernateProperties.setProperty("hibernate.show_sql", "true");
+    		return hibernateProperties;
+    }
+    
+    // 하이버네이트 트랜잭션 매니저 설정 
+    @Bean
+    public HibernateTransactionManager hibernateTransactionManager() {
+    		HibernateTransactionManager transactionManager
+    			= new HibernateTransactionManager();
+    		transactionManager.setSessionFactory(sessionFactory().getObject());
+    		return transactionManager;
+    }
+    
+	@Override
+	public PlatformTransactionManager annotationDrivenTransactionManager() {
+		return hibernateTransactionManager();
+	}
+	
+	
 
 	// css, js, image등을 위한 resource 경로 지정
 	@Override
