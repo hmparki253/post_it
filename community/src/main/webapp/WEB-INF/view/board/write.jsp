@@ -13,6 +13,7 @@
 	href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/custom.css">
+<script type="text/javascript" src="${pageContext.request.contextPath }/resources/ckeditor/ckeditor.js"></script>
 </head>
 </head>
 <body>
@@ -46,7 +47,7 @@
 						<div class="form-group">
 							<label for="">내용</label>
 							<textarea class="form-control" placeholder="내용을 입력하세요."
-								style="height: 320px"></textarea>
+								style="height: 320px" id="ckeditor"></textarea>
 						</div>
 						<div class="form-group text-center">
 							<button type="submit" class="btn btn-primary">글쓰기</button>
@@ -70,5 +71,27 @@
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
 		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
 		crossorigin="anonymous"></script>
+	<script>
+		$(function() {
+			CKEDITOR.replace('ckeditor', { // 해당 id를 가진 textarea 필요 
+				width: '100%',
+				height: '400px'
+				// 파일 업로드 url 추가 필요 
+			});
+			
+			CKEDITOR.on('dialogDefinition', function( ev ){
+	            var dialogName = ev.data.name;
+	            var dialogDefinition = ev.data.definition;
+	          
+	            switch (dialogName) {
+	                case 'image': //Image Properties dialog
+	                    //dialogDefinition.removeContents('info');
+	                    dialogDefinition.removeContents('Link');
+	                    dialogDefinition.removeContents('advanced');
+	                    break;
+	            }
+	        });
+		});
+	</script>
 </body>
 </html>
