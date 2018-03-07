@@ -1,6 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <!DOCTYPE HTML>
 <html>
@@ -37,24 +37,25 @@
 					<h2 class="h2_underline pb-2">글 작성</h2>
 				</div>
 			</div>
-			<div class="row mb-3">
-				<div class="container mt-5" style="min-height: 460px;">
-					<form action="" class="pt-3">
+			<form:form action="saveBoard" modelAttribute="board" method="POST">
+				<div class="row mb-3">
+					<div class="container mt-5" style="min-height: 460px;">
 						<div class="form-group">
-							<label for="">제목</label> <input type="text" class="form-control"
-								placeholder="제목을 입력하세요.">
+							<label for="">제목</label>
+							<form:input path="title" cssClass="form-control" placeholder="제목을 입력하세요."></form:input> 
 						</div>
 						<div class="form-group">
 							<label for="">내용</label>
-							<textarea class="form-control" placeholder="내용을 입력하세요."
-								style="height: 320px" id="ckeditor"></textarea>
+							<form:textarea path="content" cssClass="form-control"></form:textarea>
+							<!-- <textarea class="form-control" placeholder="내용을 입력하세요." style="height: 320px" id="ckeditor">
+							</textarea> -->
 						</div>
 						<div class="form-group text-center">
 							<button type="submit" class="btn btn-primary">글쓰기</button>
 						</div>
-					</form>
+					</div>
 				</div>
-			</div>
+			</form:form>
 		</div>
 	</section>
 	</main>
@@ -73,7 +74,7 @@
 		crossorigin="anonymous"></script>
 	<script>
 		$(function() {
-			CKEDITOR.replace('ckeditor', { // 해당 id를 가진 textarea 필요 
+			CKEDITOR.replace('content', { // 해당 id를 가진 textarea 필요 
 				width: '100%',
 				height: '400px'
 				// 파일 업로드 url 추가 필요 

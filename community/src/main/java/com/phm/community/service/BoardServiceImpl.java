@@ -21,10 +21,10 @@ public class BoardServiceImpl implements BoardService {
 		return boardDAO.getBoards();
 	}
 
+	@Transactional
 	@Override
 	public void saveBoard(Board board) {
-		// TODO Auto-generated method stub
-
+		boardDAO.saveBoard(board);
 	}
 
 	@Override

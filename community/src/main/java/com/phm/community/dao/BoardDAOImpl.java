@@ -32,8 +32,10 @@ public class BoardDAOImpl implements BoardDAO {
 
 	@Override
 	public void saveBoard(Board board) {
-		// TODO Auto-generated method stub
-
+		// 하이버네이트 세션 객체 생성 
+		Session currentSession = sessionFactory.getCurrentSession();
+		// 세션에 board 객체 저장 및 업데이트
+		currentSession.saveOrUpdate(board);
 	}
 
 	@Override
