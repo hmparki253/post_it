@@ -27,10 +27,10 @@ public class BoardServiceImpl implements BoardService {
 		boardDAO.saveBoard(board);
 	}
 
+	@Transactional
 	@Override
 	public Board getBoard(int idx) {
-		// TODO Auto-generated method stub
-		return null;
+		return boardDAO.getBoard(idx);
 	}
 
 	@Override

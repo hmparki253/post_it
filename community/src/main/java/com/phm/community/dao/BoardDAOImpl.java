@@ -40,8 +40,9 @@ public class BoardDAOImpl implements BoardDAO {
 
 	@Override
 	public Board getBoard(int idx) {
-		// TODO Auto-generated method stub
-		return null;
+		Session currentSession = sessionFactory.getCurrentSession();
+		Board board = currentSession.get(Board.class, idx);
+		return board;
 	}
 
 	@Override

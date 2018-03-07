@@ -57,7 +57,7 @@
 								<tr>
 									<td class="mobile" style="text-align: center;">${tempBoard.idx}</td>
 									<td>
-										<a href="${pageContext.request.contextPath }/board/${tempBoard.idx}" style="color: #000000;">
+										<a href="${pageContext.request.contextPath }/board/view/${tempBoard.idx}" style="color: #000000;">
 											${tempBoard.title }
 										</a>
 									</td>
