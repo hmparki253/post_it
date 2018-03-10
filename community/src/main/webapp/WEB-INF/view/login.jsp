@@ -16,73 +16,54 @@
 </head>
 
 <body>
-	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-		<a class="navbar-brand" href="./index.html">관리자 페이지</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse"
-			data-target="#navbar" alt-controls="navbar" aria-expanded="false">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse justify-content-between"
-			id="navbar">
-			<div class="navbar-nav">
-				<a href="./index.html" class="nav-item nav-link">대시보드</a> <a
-					href="./event.html" class="nav-item nav-link">이벤트</a> <a
-					href="./blog.html" class="nav-item nav-link">블로그</a> <a
-					href="./user.html" class="nav-item nav-link">회원</a>
-			</div>
-			<div class="navbar-nav mr-sm-2">
-				<a href="./userLogin.html" class="nav-item nav-link active">로그인</a>
-				<a href="./userLogout.html" class="nav-item nav-link">로그아웃</a> <a
-					href="./userEdit.html" class="nav-item nav-link">관리자 정보 수정</a>
-			</div>
-		</div>
-	</nav>
-	<header id="header">
-		<div class="container p-3 bg-dark text-white">
-			<div class="row">
-				<div class="col-sm-9 info">
-					<h4>
-						로그인 <small>을 합시다.</small>
-					</h4>
+	<%@include file="./partial/menu.jsp"%>
+	<main>
+		<div class="jumbotron jumbo_bg">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<h1 class="font_clr_ff">글을 쓰고, 자유롭게 소통하는 공간 Post It</h1>
+						<h3 class="font_clr_ee">다양한 분야, 다양한 사람들과 글을 공유하고</h3>
+						<h3 class="font_clr_ee">자유롭게 소통하세요.</h3>
+					</div>
 				</div>
 			</div>
 		</div>
-	</header>
-	<div class="container">
-		<ol class="breadcrumb">
-			<li class="active">로그인이 필요합니다.</li>
-		</ol>
-	</div>
-	<section class="main">
-		<div class="container" style="max-width: 560px;">
-			<form:form
-				action="${pageContext.request.contextPath }/userAuthentication"
-				method="POST">
-				<div class="from-group">
-					<label for="">아이디</label> <input type="text" name="username"
-						class="form-control">
+		<section>
+			<div class="container">
+				<div class="col-md-12 mb-4">
+					<div class="heading text-center">
+						<h2 class="h2_underline pb-2">로그인</h2>
+					</div>
 				</div>
-				<div class="from-group mt-3">
-					<label for="">비밀번호</label> <input type="password" name="password"
-						class="form-control">
+				<div class="row">
+					<div class="container mt-5"
+						style="max-width: 420px; min-height: 460px;">
+						<form action="">
+							<div class="from-group">
+								<label for="">아이디</label> <input type="text" name="" id=""
+									class="form-control">
+							</div>
+							<div class="from-group mt-3">
+								<label for="">비밀번호</label> <input type="password" name="" id=""
+									class="form-control">
+							</div>
+							<div class="form-group text-center mt-3">
+								<button type="submit" class="btn btn-primary mt-3">로그인</button>
+							</div>
+							<div class="form-group text-center">
+								<a href="#"> 
+									<small>로그인 정보를 잊으셨나요?</small>
+								</a>
+							</div>
+						</form>
+					</div>
 				</div>
-				<div class="form-group text-center">
-					<button class="btn btn-success mt-3">회원가입</button>
-					<button type="submit" class="btn btn-primary mt-3">로그인</button>
-				</div>
-				<c:if test="${param.error != null }">
-					<div class="form-group text-center text-danger">입력하신 아이디 /
-						비밀번호 정보가 일치하지 않습니다.</div>
-				</c:if>
-				<div class="form-group text-center">
-					<a href="#"> <small>로그인 정보를 잊으셨나요?</small>
-					</a>
-				</div>
-			</form:form>
-		</div>
-	</section>
-	<footer class="bg-dark mt-4 p-5 text-center" style="color: #ffffff">
-		Copyright &copy; 2018 박현민 All Rights Reserved </footer>
+			</div>
+		</section>
+	</main>
+	<%@include file="./partial/footer.jsp"%>
+	
 	<!-- 제이쿼리 자바스크립트 추가하기 -->
 	<%-- <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/popper.min.js"></script>

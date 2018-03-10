@@ -20,4 +20,5 @@ public class HomeController {
 	public String about(Model theModel) {
 		return "about";
 	}
+	
 }
