@@ -22,6 +22,8 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.TransactionManagementConfigurer;
 import org.springframework.web.filter.CharacterEncodingFilter;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -132,8 +134,23 @@ public class AppConfig implements WebMvcConfigurer, TransactionManagementConfigu
 		return hibernateTransactionManager();
 	}
 	
+//	@Bean
+//	public CommonsMultipartResolver multipartResolver() {
+//		CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+//		resolver.setDefaultEncoding("utf-8");
+//		return resolver;
+//	}
 	
-
+	// 파일 업로드와 다운로드를 위한 MultipartResolver 빈 등록
+	@Bean
+	public MultipartResolver multipartResolver() {
+		CommonsMultipartResolver resolver = 
+				new CommonsMultipartResolver();
+		resolver.setMaxInMemorySize(100000000);
+		resolver.setMaxUploadSize(200000000);
+		return resolver;
+	}
+	
 	// css, js, image등을 위한 resource 경로 지정
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {

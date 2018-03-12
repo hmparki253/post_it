@@ -36,6 +36,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		filter.setForceEncoding(true);
 		http.addFilterBefore(filter, CsrfFilter.class);
 		
+		http.headers()
+			.frameOptions().sameOrigin();
+		
+		http.csrf().disable();
 		
 		// 1. 사용자 인증이 된 요청에 대해서만 요청을 허용 (authorizeRequests())
 		// 2. 모든 요청에 대해서 USER라는 role이 있는 경우를 허용
@@ -51,10 +55,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 					.loginProcessingUrl("/userAuthentication")
 					.permitAll()
 			.and()
-				.logout().permitAll()
-			.and()
-				.exceptionHandling()
-				.accessDeniedPage("/access-denined");
+				.logout().permitAll();
+//			.and()
+//				.exceptionHandling()
+//				.accessDeniedPage("/access-denined");
 	}
 	
 	

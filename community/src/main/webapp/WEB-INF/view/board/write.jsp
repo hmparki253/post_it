@@ -76,8 +76,9 @@
 		$(function() {
 			CKEDITOR.replace('content', { // 해당 id를 가진 textarea 필요 
 				width: '100%',
-				height: '400px'
-				// 파일 업로드 url 추가 필요 
+				height: '400px',
+				filebrowserUploadUrl: '${pageContext.request.contextPath }/board/fileUpload'
+				// 파일 업로드 처리 할 경로. 
 			});
 			
 			CKEDITOR.on('dialogDefinition', function( ev ){
@@ -93,6 +94,10 @@
 	            }
 	        });
 		});
+		
+		/* function save_check(form) {
+			
+		} */
 	</script>
 </body>
 </html>

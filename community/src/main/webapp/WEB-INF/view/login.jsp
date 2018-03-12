@@ -53,6 +53,11 @@
 							</div>
 							<div class="form-group text-center">
 								<a href="#"> 
+									<small>회원가입</small>
+								</a>
+							</div>
+							<div class="form-group text-center">
+								<a href="#"> 
 									<small>로그인 정보를 잊으셨나요?</small>
 								</a>
 							</div>
