@@ -39,14 +39,21 @@
 				<div class="row">
 					<div class="container mt-5"
 						style="max-width: 420px; min-height: 460px;">
-						<form action="">
+						<form:form action="${pageContext.request.contextPath }/authenticate" method="POST">
+						<c:if test="${param.error != null}">
 							<div class="from-group">
-								<label for="">아이디</label> <input type="text" name="" id=""
-									class="form-control">
+								<label for="">
+									Sorry! You Entered invalid username/password.
+								</label>
+							</div>
+						</c:if>
+							<div class="from-group">
+								<label for="">아이디</label> 
+								<input type="text" name="username" id="" class="form-control">
 							</div>
 							<div class="from-group mt-3">
-								<label for="">비밀번호</label> <input type="password" name="" id=""
-									class="form-control">
+								<label for="">비밀번호</label> 
+								<input type="password" name="password" id="" class="form-control">
 							</div>
 							<div class="form-group text-center mt-3">
 								<button type="submit" class="btn btn-primary mt-3">로그인</button>
@@ -61,7 +68,7 @@
 									<small>로그인 정보를 잊으셨나요?</small>
 								</a>
 							</div>
-						</form>
+						</form:form>
 					</div>
 				</div>
 			</div>

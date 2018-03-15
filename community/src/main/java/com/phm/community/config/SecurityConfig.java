@@ -3,13 +3,17 @@ package com.phm.community.config;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.web.filter.CharacterEncodingFilter;
+
+import com.phm.community.util.CustomLoginSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -22,9 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		// jdbc를 통한 사용자 인증 설정
 		// auth.jdbcAuthentication().dataSource(securityDataSource);
-		auth.jdbcAuthentication().dataSource(dataSource)
-			.usersByUsernameQuery("")
-			.authoritiesByUsernameQuery("");
+		auth.jdbcAuthentication().dataSource(dataSource);
 	}
 
 	@Override
@@ -52,14 +54,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.and()
 				.formLogin() // 폼 로그인 
 					.loginPage("/login") // 로그인 페이지 
-					.loginProcessingUrl("/userAuthentication")
+					.loginProcessingUrl("/authenticate")
 					.permitAll()
+					.successHandler(successHandler())
 			.and()
-				.logout().permitAll();
-//			.and()
-//				.exceptionHandling()
-//				.accessDeniedPage("/access-denined");
+				.logout().permitAll()
+			.and()
+				.exceptionHandling()
+				.accessDeniedPage("/access-denined");
 	}
 	
+	@Bean
+	public AuthenticationSuccessHandler successHandler() {
+		return new CustomLoginSuccessHandler();
+	}
 	
 }

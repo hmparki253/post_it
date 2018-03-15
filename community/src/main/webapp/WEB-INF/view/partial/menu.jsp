@@ -27,7 +27,11 @@
         </li>
       </ul>
       <button class="btn btn-outline-primary mr-2">회원가입</button>
-      <button class="btn btn-outline-success mr-2">로그인</button>
+      <a href="${pageContext.request.contextPath }/login">
+	      <button class="btn btn-outline-success mr-2">
+	      	로그인
+	      </button>
+      </a>
       <button class="btn btn-outline-danger mr-2">로그아웃</button>
     </div>
   </div>
