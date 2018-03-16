@@ -28,12 +28,14 @@
         </li>
       </ul>
       <sec:authorize access="!hasRole('ROLE_USER')">
-      	<button class="btn btn-outline-primary mr-2">회원가입</button>
-	      <a href="${pageContext.request.contextPath }/login">
-		      <button class="btn btn-outline-success mr-2">
-		      	로그인
-		      </button>
-	      </a>
+      	<a href="${pageContext.request.contextPath }/join">
+      		<button class="btn btn-outline-primary mr-2">회원가입</button>
+      	</a>
+		<a href="${pageContext.request.contextPath }/login">
+		 <button class="btn btn-outline-success mr-2">
+		 	로그인
+		 </button>
+		</a>
       </sec:authorize>
       <sec:authorize access="hasRole('ROLE_USER')">
       	<a href="${pageContext.request.contextPath }/logout">

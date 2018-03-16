@@ -16,4 +16,9 @@ public class AuthController {
 	public String showAccessDenied() {
 		return "access-denied";
 	}
+	
+	@GetMapping("/join")
+	public String showJoin() {
+		return "join";
+	}
 }
