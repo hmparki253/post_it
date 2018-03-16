@@ -77,7 +77,6 @@ public class AppConfig implements WebMvcConfigurer, TransactionManagementConfigu
 		
 		// set the jdbc driver class
 		try {
-			logger.info("여기야 여기");
 			logger.info(">>> jdbc.driver = " + env.getProperty("jdbc.driver"));
 			dataSource.setDriverClass(env.getProperty("jdbc.driver"));
 		} catch (PropertyVetoException exc) {

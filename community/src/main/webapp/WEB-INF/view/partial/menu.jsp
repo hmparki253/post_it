@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
@@ -26,13 +27,24 @@
           <a href="" class="nav-link">Contact</a>
         </li>
       </ul>
-      <button class="btn btn-outline-primary mr-2">회원가입</button>
-      <a href="${pageContext.request.contextPath }/login">
-	      <button class="btn btn-outline-success mr-2">
-	      	로그인
-	      </button>
-      </a>
-      <button class="btn btn-outline-danger mr-2">로그아웃</button>
+      <sec:authorize access="!hasRole('ROLE_USER')">
+      	<button class="btn btn-outline-primary mr-2">회원가입</button>
+	      <a href="${pageContext.request.contextPath }/login">
+		      <button class="btn btn-outline-success mr-2">
+		      	로그인
+		      </button>
+	      </a>
+      </sec:authorize>
+      <sec:authorize access="hasRole('ROLE_USER')">
+      	<a href="${pageContext.request.contextPath }/logout">
+    			<button class="btn btn-outline-success mr-2">
+    				<%= request.getUserPrincipal().getName() %>님 환영합니다.
+    			</button>
+      	</a>
+     	<a href="${pageContext.request.contextPath }/logout">
+    			<button class="btn btn-outline-danger mr-2">로그아웃</button>
+      	</a>
+      </sec:authorize>
     </div>
   </div>
 </nav>
