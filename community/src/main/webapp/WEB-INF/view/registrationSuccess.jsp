@@ -5,7 +5,7 @@
 <!DOCTYPE>
 <html>
 <head>
-<title>회원가입</title>
+<title>회원가입성공</title>
 <meta charset="UTF-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -33,45 +33,11 @@
 			<div class="container">
 				<div class="col-md-12 mb-4">
 					<div class="heading text-center">
-						<h2 class="h2_underline pb-2">회원가입</h2>
+						<h2 class="h2_underline pb-2">회원가입에 성공하셨습니다.</h2>
 					</div>
 				</div>
 				<div class="row">
-					<div class="container mt-5"
-						style="max-width: 420px; min-height: 460px;">
-						<form:form action="${pageContext.request.contextPath }/userRegistration" modelAttribute="user" method="POST">
-						<c:if test="${param.error != null}">
-							<div class="from-group">
-								<label for="">
-									Sorry! You Entered invalid username/password.
-								</label>
-							</div>
-						</c:if>
-							<div class="from-group">
-				                <label for="">아이디</label>
-				                <form:input path="username" cssClass="form-control" />
-				                <!-- <input type="text" name="" id="" class="form-control"> -->
-				              </div>
-				              <div class="from-group mt-3">
-				                <label for="">비밀번호</label>
-				                <form:password path="password" cssClass="form-control" />
-				                <!-- <input type="password" name="" id="" class="form-control"> -->
-				              </div>
-				              <div class="from-group mt-3">
-				                <label for="">성명</label>
-				                <form:input path="name" cssClass="form-control" />
-				                <!-- <input type="text" name="" id="" class="form-control"> -->
-				              </div>
-				              <div class="from-group mt-3">
-				                <label for="">이메일</label>
-				                <form:input path="email" cssClass="form-control" />
-				                <!-- <input type="text" name="" id="" class="form-control"> -->
-				              </div>
-				              <div class="form-group text-center mt-3">
-				                <button type="submit" class="btn btn-primary mt-3">가입하기</button>
-				              </div>
-						</form:form>
-					</div>
+					
 				</div>
 			</div>
 		</section>
