@@ -99,6 +99,7 @@ public class BoardController {
 	@PostMapping("/saveBoard")
 	public String saveBoard(@ModelAttribute("board") Board board) {
 		board.setRegDt(new Date());
+		board.setEnabled(1);
 		boardService.saveBoard(board);
 		// 작성 후 목록페이지로 리다이렉트
 		return "redirect:/board/list";
