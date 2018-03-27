@@ -53,6 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		http.authorizeRequests()
 //			.antMatchers("/login").hasRole("EMPLOYEE")
 //			.antMatchers("/dashboard/**").hasRole("ADMIN")
+			.antMatchers("/board/write").hasRole("USER")
 			.and()
 				.formLogin() // 폼 로그인 
 					.loginPage("/login") // 로그인 페이지 

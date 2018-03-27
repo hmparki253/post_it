@@ -40,6 +40,7 @@
 			<form:form action="saveBoard" modelAttribute="board" method="POST">
 				<div class="row mb-3">
 					<div class="container mt-5" style="min-height: 460px;">
+						<form:hidden path="writer" value="<%= request.getUserPrincipal().getName() %>"/>
 						<div class="form-group">
 							<label for="">제목</label>
 							<form:input path="title" cssClass="form-control" placeholder="제목을 입력하세요."></form:input> 

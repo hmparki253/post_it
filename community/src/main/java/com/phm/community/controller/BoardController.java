@@ -98,14 +98,9 @@ public class BoardController {
 	// 게시글 저장 
 	@PostMapping("/saveBoard")
 	public String saveBoard(@ModelAttribute("board") Board board) {
-		// 서비스를 통한 board 추가
-		// 추후에는 hidden의 데이터를 이용해야함 
-		board.setWriter("테스트맨");
 		board.setRegDt(new Date());
 		boardService.saveBoard(board);
 		// 작성 후 목록페이지로 리다이렉트
 		return "redirect:/board/list";
 	}
-	
-	
 }

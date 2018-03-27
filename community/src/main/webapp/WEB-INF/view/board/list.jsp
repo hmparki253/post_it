@@ -1,6 +1,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <!DOCTYPE HTML>
 <html>
@@ -75,7 +76,9 @@
 						</tbody>
 					</table>
 					<div style="max-width: 1080px;">
-						<a href="${pageContext.request.contextPath }/board/write" class="btn btn-primary float-right">작성하기</a>
+						<sec:authorize access="hasRole('ROLE_USER')">
+							<a href="${pageContext.request.contextPath }/board/write" class="btn btn-primary float-right">작성하기</a>
+						</sec:authorize>
 					</div>
 					<div class="text-center" style="max-width: 1080px;">
 						<ul class="pagination">
