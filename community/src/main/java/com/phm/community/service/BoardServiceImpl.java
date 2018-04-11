@@ -33,10 +33,9 @@ public class BoardServiceImpl implements BoardService {
 		return boardDAO.getBoard(idx);
 	}
 
+	@Transactional
 	@Override
-	public void deleteCustomer(int idx) {
-		// TODO Auto-generated method stub
-
+	public void deleteBoard(int idx) {
+		boardDAO.deleteBoard(idx);
 	}
-
 }

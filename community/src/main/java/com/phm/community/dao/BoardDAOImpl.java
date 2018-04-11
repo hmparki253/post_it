@@ -25,7 +25,6 @@ public class BoardDAOImpl implements BoardDAO {
 		Query<Board> theQuery = 
 				currentSession.createQuery("from Board order by idx desc",
 											Board.class);
-		
 		// 쿼리 실행 및 결과값 얻어내기 
 		return theQuery.getResultList();
 	}
@@ -46,9 +45,14 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public void deleteCustomer(int idx) {
+	public void deleteBoard(int idx) {
 		// TODO Auto-generated method stub
-
+		Session currentSession = sessionFactory.getCurrentSession();
+		Query theQuery = currentSession.createQuery("delete from Board where " + "idx=:idx");
+		theQuery.setParameter("idx", idx);
+		theQuery.executeUpdate();
+		// theQuery.executeUpdate는 int 값을 return 하는데 affected된 row 수를 리턴하게 된다.
+		// 만약 문제가 있거나 (-1), affected된 row의 수가 0이라면 이는 문제가 될 수 있다는 증거이므로
+		// 이 경우의 처리를 하는 구문이 반드시 있어야한다.
 	}
-
 }

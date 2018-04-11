@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.phm.community.dao.FileBean;
@@ -36,9 +37,7 @@ public class BoardController {
 	@GetMapping("/list")
 	public String list(Model theModel) {
 		List<Board> boards = boardService.getBoards();
-		
 		theModel.addAttribute("boards", boards);
-		
 		return "/board/list";
 	}
 	
@@ -55,9 +54,7 @@ public class BoardController {
 	public String write(Model theModel) {
 		// 뷰에 전달할 객체 생성 및 model에 할당 
 		Board board = new Board();
-		
 		theModel.addAttribute("board", board);
-		
 		return "/board/write";
 	}
 	
@@ -103,5 +100,18 @@ public class BoardController {
 		boardService.saveBoard(board);
 		// 작성 후 목록페이지로 리다이렉트
 		return "redirect:/board/list";
+	}
+	
+	@GetMapping("/deleteBoard")
+	public String deleteBoard(@RequestParam("idx") String idx) {
+		boardService.deleteBoard(Integer.parseInt(idx));
+		return "redirect:/board/list";
+	}
+	
+	@GetMapping("/modifyBoard")
+	public String modifyBoard(@RequestParam("idx") String idx, Model model) {
+		Board board = boardService.getBoard(Integer.parseInt(idx));
+		model.addAttribute("board", board);
+		return "/board/modify";
 	}
 }

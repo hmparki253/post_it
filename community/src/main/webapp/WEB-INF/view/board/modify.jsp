@@ -31,38 +31,35 @@
 		</div>
 	</div>
 	<section>
-      <div class="container">
-        <div class="col-md-12 mb-4">
-          <div class="heading text-center">
-            <h2 class="h2_underline pb-2">${board.title }</h2>
-          </div>
-          <div class="text-center">
-            <img src="${pageContext.request.contextPath}/resources/img/calendarTiny.svg"> ${board.regDt } |
-            <img src="${pageContext.request.contextPath}/resources/img/userTiny.svg"> ${board.writer } |
-            <img src="${pageContext.request.contextPath}/resources/img/checkTiny.svg"> ${board.hit }
-          </div>
-        </div>
-        <div class="row mb-3">
-          <div class="container mt-5" style="min-height:460px;">
-          	<input type="hidden" value="${board.idx }" />
-            <div>
-              ${board.content }
-            </div>
-            <div class="text-right">
-            	  <c:url var="modifyLink" value="/board/modifyBoard">
-            	  	<c:param name="idx" value="${board.idx }" />
-            	  </c:url>
-              <a href="${modifyLink }" class="btn btn-primary">수정</a>
-              <c:url var="deleteLink" value="/board/deleteBoard">
-              	<c:param name="idx" value="${board.idx }" />
-              </c:url>
-              <a href="${deleteLink }" class="btn btn-primary">삭제</a>
-              <a href="${pageContext.request.contextPath }/board/list" class="btn btn-primary">목록</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+		<div class="container">
+			<div class="col-md-12 mb-4">
+				<div class="heading text-center">
+					<h2 class="h2_underline pb-2">글 수정</h2>
+				</div>
+			</div>
+			<form:form action="saveBoard" modelAttribute="board" method="POST">
+				<div class="row mb-3">
+					<div class="container mt-5" style="min-height: 460px;">
+						<form:hidden path="idx" value="${board.idx }" />
+						<form:hidden path="writer" value="<%= request.getUserPrincipal().getName() %>"/>
+						<div class="form-group">
+							<label for="">제목</label>
+							<form:input path="title" cssClass="form-control" placeholder="제목을 입력하세요." value="${board.title }"/>
+						</div>
+						<div class="form-group">
+							<label for="">내용</label>
+							<form:textarea path="content" cssClass="form-control" value="${board.content }" />
+							<!-- <textarea class="form-control" placeholder="내용을 입력하세요." style="height: 320px" id="ckeditor">
+							</textarea> -->
+						</div>
+						<div class="form-group text-center">
+							<button type="submit" class="btn btn-primary">수정하기</button>
+						</div>
+					</div>
+				</div>
+			</form:form>
+		</div>
+	</section>
 	</main>
 	<%@include file="../partial/footer.jsp"%>
 
@@ -81,8 +78,9 @@
 		$(function() {
 			CKEDITOR.replace('content', { // 해당 id를 가진 textarea 필요 
 				width: '100%',
-				height: '400px'
-				// 파일 업로드 url 추가 필요 
+				height: '400px',
+				filebrowserUploadUrl: '${pageContext.request.contextPath }/board/fileUpload'
+				// 파일 업로드 처리 할 경로. 
 			});
 			
 			CKEDITOR.on('dialogDefinition', function( ev ){
@@ -98,6 +96,10 @@
 	            }
 	        });
 		});
+		
+		/* function save_check(form) {
+			
+		} */
 	</script>
 </body>
 </html>
