@@ -73,3 +73,7 @@ body {
     display: none;
   }
 }
+
+.nopadding {
+	padding: 0 !important;
+}

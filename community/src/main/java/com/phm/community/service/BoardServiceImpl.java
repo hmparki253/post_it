@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.phm.community.dao.BoardDAO;
 import com.phm.community.entity.Board;
+import com.phm.community.entity.Reply;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -37,5 +38,23 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public void deleteBoard(int idx) {
 		boardDAO.deleteBoard(idx);
+	}
+
+	@Transactional
+	@Override
+	public List<Reply> getRepliesByIdx(int idx) {
+		return boardDAO.getRepliesByIdx(idx);
+	}
+
+	@Transactional
+	@Override
+	public void saveOrUpdateReply(Reply reply) {
+		boardDAO.saveOrUpdateReply(reply);
+	}
+
+	@Transactional
+	@Override
+	public long getLastInsertId() {
+		return boardDAO.getLastInsertId();
 	}
 }

@@ -2,6 +2,7 @@ package com.phm.community.config;
 
 import java.beans.PropertyVetoException;
 import java.nio.charset.Charset;
+import java.util.List;
 import java.util.Properties;
 import java.util.logging.Logger;
 
@@ -16,6 +17,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -165,4 +167,12 @@ public class AppConfig implements WebMvcConfigurer, TransactionManagementConfigu
 		
 		return intPropVal;
 	}
+
+	
+	// 명시적 메세지 컨버터 등록
+//	@Override
+//	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+//		converters.add(new Jaxb2RootElementHttpMessageConverter());
+//	}
+	
 }

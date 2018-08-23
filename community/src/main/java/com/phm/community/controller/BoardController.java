@@ -10,18 +10,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.phm.community.dao.FileBean;
 import com.phm.community.entity.Board;
+import com.phm.community.entity.Reply;
 import com.phm.community.service.BoardService;
 
 @Controller
@@ -44,8 +50,22 @@ public class BoardController {
 	// 게시글 읽기
 	@GetMapping("/view/{idx}")
 	public String view(@PathVariable("idx") int idx, Model theModel) {
-		Board board = boardService.getBoard(idx);
+		Board board = boardService.getBoard(idx); // 게시글 정보 불러오기 
+		
+		// 리플들 불러오기
+		List<Reply> replies = boardService.getRepliesByIdx(idx);
+		
+		// 빈 reply object 생성 
+		Reply reply = new Reply();
+		
+		// 조회수 증가 
+		board.setHit(board.getHit() + 1); 
+		boardService.saveBoard(board);
+		
 		theModel.addAttribute("board", board);
+		theModel.addAttribute("reply", reply);
+		theModel.addAttribute("replies", replies);
+		
 		return "/board/view";
 	}
 	
@@ -102,16 +122,59 @@ public class BoardController {
 		return "redirect:/board/list";
 	}
 	
+	// 게시글 삭제 
 	@GetMapping("/deleteBoard")
 	public String deleteBoard(@RequestParam("idx") String idx) {
 		boardService.deleteBoard(Integer.parseInt(idx));
 		return "redirect:/board/list";
 	}
 	
+	// 게시글 수정 
 	@GetMapping("/modifyBoard")
 	public String modifyBoard(@RequestParam("idx") String idx, Model model) {
 		Board board = boardService.getBoard(Integer.parseInt(idx));
 		model.addAttribute("board", board);
 		return "/board/modify";
 	}
+	
+	@PostMapping("/addReply")
+	public String addReply(@RequestParam("boardIdx") String boardIdx,
+			@ModelAttribute("reply") Reply reply) {
+		// 덧글 새로 입력 function
+		logger.info("@@@@@@@@@@@@@recognition here!!!@@@@@@@@@");
+		
+		// boardIdx 관련 값 세팅
+		reply.setBoardIdx(Integer.parseInt(boardIdx));
+		reply.setFamily(0);	// family 값 0 세팅
+		// 작성시간 세팅
+		reply.setRegDt(new Date());
+		// enabled값 세팅
+		reply.setEnabled(1);
+		
+		boardService.saveOrUpdateReply(reply);		
+		reply.setFamily((int)boardService.getLastInsertId()); // 최근 insert 되었던 family 값으로 update 
+		boardService.saveOrUpdateReply(reply);
+		
+		// 작성 후 해당 게시글로 redirection   
+		return "redirect:/board/view/" + boardIdx;
+	}
+	
+	@PostMapping("/addRereply")
+	@ResponseStatus(HttpStatus.OK)
+	public @ResponseBody String addRereply(@RequestBody Reply reply) {
+		reply.setIndent(reply.getIndent() + 1);
+		reply.setDepth(reply.getDepth() + 1);
+		reply.setRegDt(new Date());
+		reply.setEnabled(1);
+		logger.info("--------------------------------------------------------------------------------------");
+		logger.info(reply.toString());
+		logger.info("--------------------------------------------------------------------------------------");
+		boardService.saveOrUpdateReply(reply);
+		return "ok";
+	}
+	
+	
+	// 남은 작업
+	// 2. 가져온 리플목록 family와 depth에 따라 css 처리 및 화면 디자인
+	
 }
