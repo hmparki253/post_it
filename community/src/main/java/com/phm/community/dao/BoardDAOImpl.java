@@ -55,6 +55,7 @@ public class BoardDAOImpl implements BoardDAO {
 		// 이 경우의 처리를 하는 구문이 반드시 있어야한다.
 	}
 
+	// reply 관련해서 replyDao 생성 후 옮기기 필요 ----------------------
 	@Override
 	public List<Reply> getRepliesByIdx(int idx) {
 		Session currentSession = sessionFactory.getCurrentSession();
@@ -74,5 +75,22 @@ public class BoardDAOImpl implements BoardDAO {
 		Session currentSession = sessionFactory.getCurrentSession();
 		long idx = ((BigInteger) currentSession.createNativeQuery("SELECT LAST_INSERT_ID()").uniqueResult()).longValue();
 		return idx;
+	}
+
+	// pagination
+	@Override
+	public List<Board> getBoardByPagination(int curPage, int pageSize) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		Query theQuery = currentSession.createQuery("from Board order by idx desc", Board.class);
+		theQuery.setFirstResult((curPage - 1) * pageSize);
+		theQuery.setMaxResults(pageSize);
+		return theQuery.getResultList();
+	}
+
+	@Override
+	public long getBoardsCount() {
+		Session currentSession = sessionFactory.getCurrentSession();
+		Query theQuery = currentSession.createQuery("select count(board.idx) from Board board");
+		return (long) theQuery.uniqueResult();
 	}
 }

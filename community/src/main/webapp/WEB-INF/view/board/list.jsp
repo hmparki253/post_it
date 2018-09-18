@@ -81,15 +81,39 @@
 						</sec:authorize>
 					</div>
 					<div class="text-center" style="max-width: 1080px;">
-						<ul class="pagination">
-							<li class="page-item"><span class="page-link">&laquo;</span>
-							</li>
-							<li class="page-item active"><a href="#"
-								class="page-link mobile">1</a></li>
-							<li class="page-item"><a href="#" class="page-link mobile">2</a>
-							</li>
-							<li class="page-item"><span class="page-link">&raquo;</span>
-							</li>
+						<ul class="pagination justify-content-center">
+							
+							<c:if test="${isPre eq true}">
+								<li class="page-item">
+									<span class="page-link">&laquo;</span>
+								</li>
+							</c:if>
+							
+							<c:forEach begin="${startPage }" end="${endPage }" varStatus="loop">
+								<c:choose>
+								
+									<c:when test="${curPage eq loop.current }">
+										<li class="page-item active">
+											<a href="./${loop.current }" class="page-link mobile">${curPage }</a>
+										</li>			
+									</c:when>
+									
+									<c:otherwise>
+										<li class="page-item">
+											<a href="./${loop.current }" class="page-link mobile">
+												<c:out value="${loop.current }" />
+											</a>
+										</li>
+									</c:otherwise>
+									
+								</c:choose>
+							</c:forEach>
+							
+							<c:if test="${isPre eq true}">
+								<li class="page-item">
+									<span class="page-link">&raquo;</span>
+								</li>
+							</c:if>
 						</ul>
 					</div>
 					<div class="text-center" style="max-width: 1080px;">

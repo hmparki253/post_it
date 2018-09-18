@@ -7,55 +7,35 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.phm.community.dao.BoardDAO;
+import com.phm.community.dao.TestTableDAO;
 import com.phm.community.entity.Board;
-import com.phm.community.entity.Reply;
+import com.phm.community.entity.TestTable;
 
 @Service
-public class BoardServiceImpl implements BoardService {
+public class TestTableServiceImpl implements TestTableService {
 
+	@Autowired
+	private TestTableDAO testTableDAO;
+	
 	@Autowired
 	private BoardDAO boardDAO;
 	
 	@Transactional
 	@Override
-	public List<Board> getBoards() {
-		return boardDAO.getBoards();
+	public void saveTestTable(TestTable testTable) {
+		testTableDAO.saveTestTable(testTable);
 	}
 
 	@Transactional
 	@Override
-	public void saveBoard(Board board) {
-		boardDAO.saveBoard(board);
-	}
-
-	@Transactional
-	@Override
-	public Board getBoard(int idx) {
-		return boardDAO.getBoard(idx);
-	}
-
-	@Transactional
-	@Override
-	public void deleteBoard(int idx) {
-		boardDAO.deleteBoard(idx);
-	}
-
-	@Transactional
-	@Override
-	public List<Reply> getRepliesByIdx(int idx) {
-		return boardDAO.getRepliesByIdx(idx);
-	}
-
-	@Transactional
-	@Override
-	public void saveOrUpdateReply(Reply reply) {
-		boardDAO.saveOrUpdateReply(reply);
+	public TestTable getTestTable(int idx) {
+		return testTableDAO.getTestTable(idx);
 	}
 
 	@Transactional
 	@Override
 	public long getLastInsertId() {
-		return boardDAO.getLastInsertId();
+		return testTableDAO.getLastInsertId();
 	}
 
 	@Transactional
@@ -69,4 +49,5 @@ public class BoardServiceImpl implements BoardService {
 	public long getBoardsCount() {
 		return boardDAO.getBoardsCount();
 	}
+
 }

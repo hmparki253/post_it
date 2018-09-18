@@ -15,7 +15,7 @@
           <a href="${pageContext.request.contextPath}/" class="nav-link">Main</a>
         </li>
         <li class="nav-item">
-          <a href="${pageContext.request.contextPath}/board/list" class="nav-link">Board</a>
+          <a href="${pageContext.request.contextPath}/board/list/1" class="nav-link">Board</a>
         </li>
         <li class="nav-item">
           <a href="" class="nav-link">User</a>

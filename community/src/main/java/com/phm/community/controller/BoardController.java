@@ -47,6 +47,33 @@ public class BoardController {
 		return "/board/list";
 	}
 	
+	// 현재 페이지 기준 게시글 목록 가져오기
+	@GetMapping("/list/{curPage}")
+	public String list(@PathVariable("curPage") int curPage, Model theModel) {
+		final int writingSize = 10; // 한 페이지에서 보여질 게시글의 갯수 
+		final int pageSize = 5; // 한 페이지에서 보여질 pagination의 갯수  
+		
+		List<Board> boards = boardService.getBoardByPagination(curPage, writingSize); // 현재 페이지에 보여질 게시글 objects 
+		long totalBoardCount = boardService.getBoardsCount(); // * 총 게시물 갯수
+		int totalPageCount = (int) (((totalBoardCount - 1) / writingSize) + 1); // * 총 페이지 수
+		
+		// ex) 현재 페이지가 3페이지 일 경우 -> 1. 2. 3. 4. 5
+		int startPage = ((curPage - 1) / pageSize) * pageSize + 1; // 페이지 시작번호 
+		int endPage = Math.min(startPage + pageSize - 1, totalPageCount);
+		
+		boolean isPre = startPage != 1;
+		boolean isNext = endPage < totalPageCount ;
+		
+		theModel.addAttribute("boards", boards);
+		theModel.addAttribute("curPage", curPage);
+		theModel.addAttribute("startPage", startPage);
+		theModel.addAttribute("endPage", endPage);
+		theModel.addAttribute("isPre", isPre);
+		theModel.addAttribute("isNext", isNext);
+		
+		return "/board/list";
+	}
+	
 	// 게시글 읽기
 	@GetMapping("/view/{idx}")
 	public String view(@PathVariable("idx") int idx, Model theModel) {

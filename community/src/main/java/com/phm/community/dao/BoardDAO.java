@@ -17,4 +17,9 @@ public interface BoardDAO {
 	public void saveOrUpdateReply(Reply reply);
 	// 마지막 insertid 가져오는 function
 	public long getLastInsertId();
+	
+	// 페이지네이션으로 끊어서 가져오기 
+	public List<Board> getBoardByPagination(int curPage, int pageSize);
+	// 전체 게시글 count 가져오기
+	public long getBoardsCount();
 }

@@ -13,6 +13,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.phm.community.config.AppConfig;
 import com.phm.community.config.SecurityConfig;
+import com.phm.community.entity.Board;
 import com.phm.community.entity.Reply;
 import com.phm.community.service.BoardService;
 import com.phm.community.service.TestTableService;
@@ -37,6 +38,60 @@ public class AuthTest {
 	
 	private Logger logger = Logger.getLogger(getClass().getName());
 	
+	// Pagination Testing
+	// 1번 페이지의 경우 11번부터 2번까지의 row를 가져오는지 확인해준다. 
+//	@Test
+//	public void selectByNumber() {
+//		List<Board> boards = testTableService.getBoardByPagination(2, 10);
+//		for(Board board : boards) {
+//			logger.info("가져온 값은 : " + board.toString());
+//		}
+//	}
+	
+	// pagination testing 실패의 경우를 확인해보기
+	// 현재 데이터로 2번 페이지 까지는 1개의 row라도 나오지만 문제는 그 다음 3번 페이지다
+//	@Test
+//	public void selectByNumberPageThr() {
+//		List<Board> boards = testTableService.getBoardByPagination(3, 10);
+//		for(Board board : boards) {
+//			logger.info("성공입니까 실패입니까? : " + board.toString());
+//		}
+//	}
+	
+	@Test
+	public void paginationTest() {
+		final int curPage = 2;
+		final int writingSize = 10;
+		final int pageSize = 5;
+		
+//		List<Board> boards = boardService.getBoardByPagination(curPage, writingSize);
+		long totalBoardCount = boardService.getBoardsCount(); // * 총 게시물 갯수
+		int totalPageCount = (int) (((totalBoardCount - 1) / writingSize) + 1); // * 총 페이지 수
+		
+		// ex) 현재 페이지가 3페이지 일 경우 -> 1. 2. 3. 4. 5
+		int startPage = ((curPage - 1) / pageSize) * pageSize + 1; // 페이지 시작번호 
+		int endPage = Math.min(startPage + pageSize - 1, totalPageCount);
+		
+		boolean isPre = startPage != 1;
+		boolean isNext = endPage < totalPageCount ;
+		logger.info("전체 게시글 숫자 : " + totalBoardCount); // 11
+		logger.info("전체 페이지 숫자 : " + totalPageCount); // 12
+		logger.info("시작 페이지 숫자 : " + startPage); // 1
+		logger.info("끝나는 페이지 숫자 : " + endPage); // 12
+		logger.info("이전 페이지가 있습니까? : " + isPre);
+		logger.info("다음 페이지가 있습니까? : " + isNext);
+	}
+	
+	// 전체 카운트 가져오는 Test function
+//	@Test
+//	public void selectBoardsCount() {
+//		long count = testTableService.getBoardsCount();
+//		logger.info("나온 값이 무엇입니까? : " + count);
+//	}
+	
+	// 페이지에 필요한건 해당 게시물들 object, 총 게시물 숫자
+	
+	
 //	@Test
 //	public void insertTestTable() {
 //		String test = "nonenono";
@@ -56,13 +111,13 @@ public class AuthTest {
 //		boardService.saveOrUpdateReply(reply);
 //	}
 	
-	@Test
-	public void selectReplies() {
-		List<Reply> replies = boardService.getRepliesByIdx(19);
-		for(Reply reply : replies) {
-			logger.info("가져온 값은 : " + reply.toString());
-		}
-	}
+//	@Test
+//	public void selectReplies() {
+//		List<Reply> replies = boardService.getRepliesByIdx(19);
+//		for(Reply reply : replies) {
+//			logger.info("가져온 값은 : " + reply.toString());
+//		}
+//	}
 	
 //	@Test
 //	public void getLastInsertId() {
